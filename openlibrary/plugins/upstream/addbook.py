@@ -6,7 +6,6 @@ import web
 import json
 import csv
 import datetime
-
 from typing import Literal, overload, NoReturn
 
 from infogami import config
@@ -66,14 +65,16 @@ def get_recaptcha():
         return None
 
 
+def make_author(key: str, name: str) -> Author:
+    """Use author_key and author_name and return an Author."""
+    key = "/authors/" + key
+    return web.ctx.site.new(
+        key, {"key": key, "type": {"key": "/type/author"}, "name": name}
+    )
+
+
 def make_work(doc):
     w = web.storage(doc)
-
-    def make_author(key, name):
-        key = "/authors/" + key
-        return web.ctx.site.new(
-            key, {"key": key, "type": {"key": "/type/author"}, "name": name}
-        )
 
     w.authors = [
         make_author(key, name)
