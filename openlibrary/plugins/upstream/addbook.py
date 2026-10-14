@@ -77,7 +77,7 @@ def make_work(doc):
 
     w.authors = [
         make_author(key, name)
-        for key, name in zip(doc['author_key'], doc['author_name'])
+        for key, name in zip(doc.get('author_key', []), doc.get('author_name', []))
     ]
     w.cover_url = "/images/icons/avatar_book-sm.png"
 
