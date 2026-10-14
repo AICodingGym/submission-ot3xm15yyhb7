@@ -4,6 +4,11 @@
 ###############################################
 FROM python:3.11.1-slim
 
+# Debian bullseye is EOL; packages moved to archive.debian.org
+RUN sed -i -e 's|http://deb.debian.org|http://archive.debian.org|g' \
+           -e 's|http://security.debian.org|http://archive.debian.org|g' /etc/apt/sources.list \
+ && echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid
+
 ###############################################
 # WORKING DIRECTORY
 ###############################################
